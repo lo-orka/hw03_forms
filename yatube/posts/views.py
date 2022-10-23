@@ -1,11 +1,8 @@
-from tokenize import group
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Post, Group, User
 from .forms import PostForm
-
-from yatube import settings
 
 
 def index(request):
@@ -59,7 +56,7 @@ def post_detail(request, post_id):
         'author': author,
         'posts_count': posts_count,
     }
-    return render(request, 'posts/post_detail.html', context) 
+    return render(request, 'posts/post_detail.html', context)
 
 
 def post_create(request):
@@ -76,7 +73,7 @@ def post_create(request):
         return render(request, 'posts/create_post.html', context)
     else:
         form = PostForm()
-        context = {'form': form,}
+        context = {'form': form, }
         return render(request, 'posts/create_post.html', context)
 
 

@@ -1,5 +1,6 @@
 from django.views.generic.base import TemplateView
 
+
 app_name = 'about'
 
 class AboutAuthorView(TemplateView):
