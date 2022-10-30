@@ -6,6 +6,7 @@
   Новый пост
   {% endif %}
 {% endblock %}
+
 {% block content %}
 {% load user_filters %}
   <div class="container py-5">
@@ -34,11 +35,7 @@
                 </div>
               {% endfor %}
             {% endif %}
-            <form method="post"
-              {% if action_url %}
-                action="{% url action_url %}"
-              {% endif %}
-            >
+            <form method="post">
               {% csrf_token %}
               {% for field in form %}
               <div class="form-group row my-3 p-3"

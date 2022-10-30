@@ -34,10 +34,10 @@ class Post(models.Model):
         verbose_name='Группа'
     )
 
+    class Meta:
+            ordering = ('-pub_date'),
+            verbose_name = 'post',
+            verbose_name_plural = 'posts'
+
     def __str__(self):
         return self.text
-
-    class Meta:
-        ordering = ('-pub_date'),
-        verbose_name = 'post',
-        verbose_name_plural = 'posts'

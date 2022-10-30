@@ -2,6 +2,7 @@
 {% block title %}
   Пост {{ post.text|truncatechars:30 }}
 {% endblock title %}
+
 {% block content %}
 <div class="container py-5"> 
   <div class="row">
@@ -19,13 +20,13 @@
           </li>
         {% endif %}
         <li class="list-group-item">
-          Автор: {{ author.get_full_name }}
+          Автор: {{ post.author.get_full_name }}
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          Всего постов автора:  <span>{{ posts_count }}</span>
+          Всего постов автора:  <span>{{ post.author.posts.count }}</span>
         </li>
         <li class="list-group-item">
-          <a href="{% url 'posts:profile' author %}">
+          <a href="{% url 'posts:profile' post.author %}">
             все посты пользователя
           </a>
         </li>
@@ -34,7 +35,7 @@
     <article class="col-12 col-md-9">
       <p>{{ post.text }}</p>
       {% if request.user == post.author %}
-        <a class="btn btn-primary" href="{% url 'posts:post_edit' post.pk %}">
+        <a class="btn btn-primary" href="{% url 'posts:post_edit' post.id %}">
           редактировать запись
         </a>
         {% endif %}
