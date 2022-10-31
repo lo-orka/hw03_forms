@@ -11,8 +11,8 @@ class Group(models.Model):
     description = models.TextField()
 
     class Meta:
-        verbose_name='Группа',
-        verbose_name_plural='Группы'
+        verbose_name= 'Группа',
+        verbose_name_plural= 'Группы'
 
     def __str__(self):
         return self.title
@@ -27,7 +27,7 @@ class Post(models.Model):
         auto_now_add=True,
         verbose_name='Дата публикации',
         help_text='Дата публикации поста',
-        )
+    )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
