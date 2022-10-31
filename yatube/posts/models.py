@@ -21,28 +21,28 @@ class Group(models.Model):
 class Post(models.Model):
     text = models.TextField(
         'Текст поста',
-        help_text = 'Текст нового поста',
+        help_text='Текст нового поста',
     )
     pub_date = models.DateTimeField(
         auto_now_add=True,
-        verbose_name = 'Дата публикации',
-        help_text = 'Дата публикации поста',
+        verbose_name='Дата публикации',
+        help_text='Дата публикации поста',
     )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name = 'posts',
-        verbose_name = 'Автор',
-        help_text = 'Автор поста',
+        related_name='posts',
+        verbose_name='Автор',
+        help_text='Автор поста',
     )
     group = models.ForeignKey(
         Group,
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-        related_name = 'posts',
-        verbose_name = 'Группа',
-        help_text = 'Группа, к которой будет относиться пост',
+        related_name='posts',
+        verbose_name='Группа',
+        help_text='Группа, к которой будет относиться пост',
     )
 
     class Meta:
