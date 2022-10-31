@@ -10,6 +10,10 @@ class Group(models.Model):
     slug = models.SlugField(unique=True)
     description = models.TextField()
 
+    class Meta:
+        verbose_name='Группа',
+        verbose_name_plural='Группы'
+
     def __str__(self):
         return self.title
 
@@ -19,11 +23,17 @@ class Post(models.Model):
         'Текст поста',
         help_text='Текст нового поста',
     )
-    pub_date = models.DateTimeField(auto_now_add=True)
+    pub_date = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Дата публикации',
+        help_text='Дата публикации поста',
+        )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='posts'
+        related_name='posts',
+        verbose_name='Автор',
+        help_text='Автор поста',
     )
     group = models.ForeignKey(
         Group,
@@ -31,14 +41,14 @@ class Post(models.Model):
         null=True,
         on_delete=models.SET_NULL,
         related_name='posts',
+        verbose_name='Группа',
         help_text='Группа, к которой будет относиться пост',
-        verbose_name='Группа'
     )
 
     class Meta:
         ordering = ('-pub_date'),
-        verbose_name = 'post',
-        verbose_name_plural = 'posts'
+        verbose_name = 'Пост',
+        verbose_name_plural = 'Посты'
 
     def __str__(self):
         return self.text
