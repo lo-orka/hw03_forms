@@ -15,7 +15,7 @@ def index(request):
     return render(request, 'posts/index.html', context)
 
 
-def group_posts(request, slug):
+def group_list(request, slug):
     group = get_object_or_404(Group, slug=slug)
     posts_list = group.posts.all()
     page_obj = page_limits(posts_list, request.GET.get('page'))
@@ -65,7 +65,7 @@ def post_edit(request, post_id):
     form = PostForm(request.POST or None, instance=post)
     if form.is_valid():
         form.save()
-        return redirect('posts:post_detail', post_id)
+        return redirect('posts:post_detail', post_id, ЫЫ)
     context = {
         'form': form,
         'is_edit': True,
