@@ -1,9 +1,7 @@
-from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
+from http import HTTPStatus
 
-from ..models import Post, Group
-
-User = get_user_model()
+from posts.models import Post, Group, User
 
 
 class PostURLTest(TestCase):
@@ -22,7 +20,6 @@ class PostURLTest(TestCase):
         )
 
     def setUp(self):
-        self.guest_client = Client()
         self.user = User.objects.create_user(username='noName')
         self.authorized_client = Client()
         self.authorized_client.force_login(PostURLTest.user)
@@ -47,21 +44,25 @@ class PostURLTest(TestCase):
     def test_url_status_is_correct_to_everyone(self):
         """URL-адрес доступен корректно для всех"""
         address_url_names = {
-             '/': 200,
-            f'/group/{self.group.slug}/': 200,
-            f'/profile/{self.user.username}/': 200,
-            f'/posts/{self.post.id}/': 200,
-            '/unexisting_page/': 404,
+            '/': 'posts/index.html',
+            f'/group/{self.group.slug}/': 'posts/group_list.html',
+            f'/profile/{self.user.username}/': 'posts/profile.html',
+            f'/posts/{self.post.id}/': 'posts/post_detail.html',
         }
-        for address, code in address_url_names.items():
+        for address in address_url_names:
             with self.subTest(address=address):
-                response = self.guest_client.get(address)
-                self.assertEqual(response.status_code, code)
-    
+                response = self.client.get(address)
+                self.assertEqual(response.status_code, HTTPStatus.OK)
+
+    def test_error_page_status_404(self):
+        """URL-адрес недоступен для несуществующих страниц"""
+        response = self.client.get('/unexisting_page/')
+        self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)
+
     def test_create_url_redirect_anonymous_on_login(self):
         """Страница /create/ перенаправляет анонимного
         пользователя на страницу логина"""
-        response = self.guest_client.get('/create/', follow=True)
+        response = self.client.get('/create/', follow=True)
         self.assertRedirects(
             response, ('/auth/login/?next=/create/'))
 
